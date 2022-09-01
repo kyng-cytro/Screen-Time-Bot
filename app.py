@@ -653,7 +653,7 @@ def main():
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
                           url_path=os.getenv('token'),
-                          webhook_url="https://screen-time-bot.herokuapp.com/" + os.getenv('token'))
+                          webhook_url=os.getenv('webhook_url') + os.getenv('token'))
 
     updater.idle()
 
