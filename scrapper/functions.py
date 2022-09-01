@@ -92,8 +92,15 @@ def get_shows(username="", password=""):
             series_image = content_html.find("img", {"id": "big_image"}).get(
                 'src').replace("//", "https://")
 
-            series_summary = content_html.find(
-                "div", {"id": "summary"}).text.strip()
+            try:
+                episode_id = [x.get('id') for x in content_html.find_all(
+                    'div', {'class': 'sub_main'}) if x.get('id')][0]
+
+            except IndexError:
+                episode_id = None
+
+            series_summary = s.get(
+                f"https://next-episode.net/PAGES/misc/episode_overview?id={episode_id}").text
 
             data = {
 
