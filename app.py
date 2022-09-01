@@ -142,7 +142,7 @@ def echo(update: Update, context: CallbackContext):
     if update.message.text == "📽 Movies Updates":
         context.bot.send_message(
             chat_id=user_id,
-            text="Movie Updates are sent to our group weekly (Startudays 10am W.A.T)",
+            text="Movie Updates are sent to our group weekly (Sartudays 10am W.A.T)",
             reply_markup=movies_layout_inline
         )
 
