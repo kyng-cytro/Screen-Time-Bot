@@ -151,7 +151,7 @@ def echo(update: Update, context: CallbackContext):
             context.bot.send_message(
                 chat_id=user_id,
                 parse_mode="Markdown",
-                text=f"You currently have the *{'Custom List Shows' if (user['custom']) else 'Hotest TV-Shows Daily'}* subcription.",
+                text=f"You currently have the *{'Custom List TV-Shows' if (user['custom']) else 'Hotest TV-Shows Daily'}* subcription.",
                 reply_markup=custom_series_layout_inline if(user['custom']) else series_layout_inline)
         else:
             context.bot.send_message(
