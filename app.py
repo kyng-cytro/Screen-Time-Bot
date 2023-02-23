@@ -10,7 +10,7 @@ import datetime
 
 
 # Required Variables
-greeetings = ["hello", "hi", "howdy", "sup", "aloha"]
+greetings = ["hello", "hi", "howdy", "sup", "aloha"]
 
 # Custom Keyboards
 
@@ -32,7 +32,7 @@ series_layout = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton("Custom List Of Shows"),
-            KeyboardButton("Hotest TV-Shows Daily")
+            KeyboardButton("Hottest TV-Shows Daily")
         ],
         [KeyboardButton("🚫 Cancel")]
     ]
@@ -50,7 +50,7 @@ series_layout_inline = InlineKeyboardMarkup(
 
             InlineKeyboardButton(
                 "🚫 Cancel Subscription",
-                callback_data="show_cancle_layout"
+                callback_data="show_cancel_layout"
             )
         ]
     ]
@@ -66,7 +66,7 @@ custom_series_layout_inline = InlineKeyboardMarkup(
 
             InlineKeyboardButton(
                 "🚫 Cancel Subscription",
-                callback_data="show_cancle_layout"
+                callback_data="show_cancel_layout"
             )
         ],
         [
@@ -78,11 +78,11 @@ custom_series_layout_inline = InlineKeyboardMarkup(
     ]
 )
 
-cancle_sub_confirm = InlineKeyboardMarkup(
+cancel_sub_confirm = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("✅ Yes", callback_data="cancle_subcription"),
-            InlineKeyboardButton("❌ No", callback_data="no_cancle_subcription")
+            InlineKeyboardButton("✅ Yes", callback_data="cancel_subscription"),
+            InlineKeyboardButton("❌ No", callback_data="no_cancel_subscription")
         ],
     ]
 )
@@ -116,13 +116,13 @@ def start(update: Update, context: CallbackContext):
         add_user(first_name, user_id)
         context.bot.send_message(
             chat_id=user_id, parse_mode="Markdown",
-            text=f"*{choice(greeetings).capitalize()} {first_name}* Welcome to Screen Time 🍿",
+            text=f"*{choice(greetings).capitalize()} {first_name}* Welcome to Screen Time 🍿",
             reply_markup=home_layout
         )
     else:
         context.bot.send_message(
             chat_id=user_id, parse_mode="Markdown",
-            text=f"*{choice(greeetings).capitalize()} {first_name}* Welcome back to Screen Time 🍿",
+            text=f"*{choice(greetings).capitalize()} {first_name}* Welcome back to Screen Time 🍿",
             reply_markup=home_layout
         )
 
@@ -142,7 +142,7 @@ def echo(update: Update, context: CallbackContext):
     if update.message.text == "📽 Movies Updates":
         context.bot.send_message(
             chat_id=user_id,
-            text="Movie Updates are sent to our group weekly (Sartudays 10am W.A.T)",
+            text="Movie Updates are sent to our group weekly (Saturdays 10am W.A.T)",
             reply_markup=movies_layout_inline
         )
 
@@ -151,7 +151,7 @@ def echo(update: Update, context: CallbackContext):
             context.bot.send_message(
                 chat_id=user_id,
                 parse_mode="Markdown",
-                text=f"You currently have the *{'Custom List TV-Shows' if (user['custom']) else 'Hotest TV-Shows Daily'}* subcription.",
+                text=f"You currently have the *{'Custom List TV-Shows' if (user['custom']) else 'Hottest TV-Shows Daily'}* subscription.",
                 reply_markup=custom_series_layout_inline if(user['custom']) else series_layout_inline)
         else:
             context.bot.send_message(
@@ -160,11 +160,11 @@ def echo(update: Update, context: CallbackContext):
                 reply_markup=series_layout
             )
 
-    elif update.message.text == "Hotest TV-Shows Daily":
+    elif update.message.text == "Hottest TV-Shows Daily":
         subscribe(user_id, 0)
         context.bot.send_message(
             chat_id=user_id,
-            text="✅ Done. You will now get daily updates on the latest and hotest episodes",
+            text="✅ Done. You will now get daily updates on the latest and hottest episodes",
             reply_markup=home_layout
         )
 
@@ -243,10 +243,10 @@ def echo(update: Update, context: CallbackContext):
             text="This bot Sends Daily Or Weekly Updates On The Latest Movies And Shows.\n\nHere are some commands to help.\n\n/start - Start or Restart the bot\n/help - Get Info and Help\n/search <name of tv-show> - Search for tv-shows to follow"
         )
 
-    elif any(substring in update.message.text.lower() for substring in greeetings):
+    elif any(substring in update.message.text.lower() for substring in greetings):
         context.bot.send_message(
             chat_id=user_id, parse_mode="Markdown",
-            text=f"*{choice(greeetings).capitalize()} {first_name}*",
+            text=f"*{choice(greetings).capitalize()} {first_name}*",
             reply_markup=home_layout
         )
 
@@ -268,23 +268,23 @@ def inline_button(update: Update, context: CallbackContext):
     elif query.data == "error":
         query.answer()
 
-    elif query.data == "cancle_subcription":
+    elif query.data == "cancel_subscription":
         query.answer()
         unsubscribe(user_id)
         query.edit_message_text(text="✅ Subscription canceled successfully.")
 
-    elif query.data == "no_cancle_subcription":
+    elif query.data == "no_cancel_subscription":
         query.answer()
         query.edit_message_text(
             "🍿 Main Menu",
         )
 
-    elif query.data == "show_cancle_layout":
+    elif query.data == "show_cancel_layout":
         query.answer()
         query.edit_message_text(
-            f"Do you really want to cancle your *{'Custom List Of Shows' if (user['custom']) else 'Hotest TV-Shows Daily'}* subscription?",
+            f"Do you really want to cancel your *{'Custom List Of Shows' if (user['custom']) else 'Hottest TV-Shows Daily'}* subscription?",
             parse_mode="Markdown",
-            reply_markup=cancle_sub_confirm
+            reply_markup=cancel_sub_confirm
         )
 
     elif query.data == "show_sub_details":
@@ -424,7 +424,7 @@ def add_show(update: Update, context: CallbackContext):
     if not user['custom']:
         context.bot.send_message(
             chat_id=user_id,
-            text="Nahhh You need an active *Custom List Of Shows* subscription to do that.",
+            text="You need an active *Custom List Of Shows* subscription to do that.",
             parse_mode="Markdown"
         )
     else:
@@ -602,7 +602,7 @@ def shows_job_handler(context):
         if results:
             context.bot.send_message(
                 chat_id=user_id,
-                text=f"*{choice(greeetings).capitalize()} {first_name}* You have *{len(results)}* TV-Show updates",
+                text=f"*{choice(greetings).capitalize()} {first_name}* You have *{len(results)}* TV-Show updates",
                 parse_mode="Markdown"
             )
             chunks = chunkalize(results)
@@ -649,7 +649,7 @@ def main():
 
     job_queue.run_daily(movies_job_handler, datetime.time(9, 0, 0), (5,))
 
-    # Strat Polling
+    # Start Polling
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
                           url_path=os.getenv('token'),
