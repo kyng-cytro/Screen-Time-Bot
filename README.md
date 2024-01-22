@@ -11,7 +11,7 @@ Screen-Time is a Telegram bot built with Python that provides movie and TV show 
 
 ## 📣 Try it out
 
-You can try out Screen-Time bot by visiting this link: https://t.me/screentime_bot
+Screen-Time bot has been deactivated pending rewrite using serverless functions.
 
 ## 📸 Screenshots
 
